@@ -1,15 +1,14 @@
 const request = require('supertest');
 const chai = require('chai');
 const app = require('../server');
-const bodyParser = require('body-parser')
 const expect = chai.expect;
 
-describe('GET /user', function() {
-  it('respond with json', function(done) {
+
+describe('/products', function() {
+  it('should be a /products route', function(done) {
     request(app)
-      .get('/user')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
+      .post('/products')
+      // .expect('Content-Type', /json/)
       .expect(200, done);
   });
 });
