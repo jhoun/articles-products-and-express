@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.route('/')
   .post((req,res) => {
-    res.send();
+    res.send('thanks');
   })
 
 
