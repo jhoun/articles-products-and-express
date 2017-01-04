@@ -3,8 +3,8 @@ const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const app = express();
 const products = require('./routes/products');
+const articles = require('./routes/articles');
 
-app.use('/products', products);
 
 app.engine('.hbs', exphbs({
   extname: '.hbs',
@@ -12,6 +12,15 @@ app.engine('.hbs', exphbs({
 }))
 
 app.set('view engine', '.hbs');
+
+app.use(bodyParser.urlencoded({
+  extended:true
+}));
+
+app.use('/products', products);
+
+app.use('/articles', articles);
+
 
 
 if(!module.parent){
