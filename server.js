@@ -22,10 +22,9 @@ app.use('/products', products);
 app.use('/articles', articles);
 
 
-
 if(!module.parent){
-    app.listen(3000, () => {
-    console.log('Server started on port 3000');
+    app.listen(8080, () => {
+    console.log('Server started on port 8080');
   });
 }
 

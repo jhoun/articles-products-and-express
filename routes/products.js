@@ -15,7 +15,7 @@ const isInputValid = (req, res, next) => {
   if(isNaN(Number(req.body.price)) || isNaN(Number(req.body.inventory))) {
     res.redirect('/products/new');
   } else {
-  next()
+    next()
   }
 }
 
@@ -25,6 +25,18 @@ router.route('/')
     res.redirect('/products');
   })
 
+router.route('/new')
+  .get((req,res) => {
+    res.render('index');
+  })
+
+router.route('/:id')
+  .put((req,res) => {
+    Products.editById(req.params.id, req.body.name);
+    res.send(`Got user number ${req.params.id}`);
+  })
+
+//do put, then check get to make sure that name property changes
 
 
 module.exports = router;
