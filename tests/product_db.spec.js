@@ -15,5 +15,17 @@ describe('product db', function() {
     Product.reset();
     done();
   });
+
+  it('should have updated product name', function(done) {
+    let postData =  {name: 'green bag', price: '23', inventory: '100'};
+
+    let addResult = Product.add(postData);
+
+    let editByIdResult = Product.editById(1, 'rainbow bag');
+
+    expect(editByIdResult).to.deep.equal([{id: 1, name:'rainbow bag', price: 23, inventory: 100}]);
+    Product.reset();
+    done();
+  });
 })
 

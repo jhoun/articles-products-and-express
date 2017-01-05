@@ -33,7 +33,7 @@ router.route('/new')
 router.route('/:id')
   .put((req,res) => {
     Products.editById(req.params.id, req.body.name);
-    res.send(`Got user number ${req.params.id}`);
+    res.redirect(`/products/${req.params.id}`);
   })
 
 //do put, then check get to make sure that name property changes

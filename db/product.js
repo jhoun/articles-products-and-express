@@ -13,14 +13,14 @@ module.exports = (function(){
   }
 
   var _editById = function(routeId, newName){
-    console.log('req.params.id', routeId);
-    console.log('products: ', products);
-    console.log('products[0].id: ', products[0].id);
-    console.log('newName: ', newName);
-    if (Number(routeId) === products[0].id) {
-      products[0].name = newName;
+      console.log(routeId);
+    for (var i = 0; i < products.length; i++){
+      if (Number(routeId) === products[i].id) {
+        products[i].name = newName;
+      }
+      console.log('new products: ', products);
+      return products;
     }
-    console.log('newProducts: ', products);
   }
 
   var _reset = function(){

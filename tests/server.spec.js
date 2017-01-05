@@ -7,7 +7,7 @@ const should = chai.should;
 
 
 
-describe('/products', function() {
+describe('POST /products', function() {
   it('respond with redirecting to /products', function(done) {
     request(app)
       .post('/products')
@@ -22,7 +22,7 @@ describe('/products', function() {
           throw new Error(err);
         }
         expect(res.header.location).to.equal('/products')
-
+        Product.reset();
         done()
       });
   })
@@ -63,20 +63,17 @@ describe('/products', function() {
 describe('/products/:id', function() {
   it('finds a product in the collection with same id', function(done) {
     request(app)
-      .put('/products/1')
-      .type('form')
-      .send({
-        id: 1,
-        name:'Red Bag',
-        price: 34,
-        inventory: 100
-      })
-      .end(function (err, res) {
-        if (err) {
-          throw new Error(err);
-        }
-        expect(res.request._data.id).to.equal(1)
-        done()
-      });
+    .put('/products/1')
+    .type('form')
+    .send({
+      name:'Rainbow Bag',
+    })
+    .end(function (err, res) {
+      if (err) {
+        throw new Error(err);
+      }
+      expect(res.header.location).to.equal('/products/1')
+      done()
+    });
   })
 })
