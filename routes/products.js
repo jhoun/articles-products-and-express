@@ -11,17 +11,10 @@ const isObjEmpty = (req, res, next) => {
 }
 
 const isInputValid = (req, res, next) => {
-  if(!req.body.hasOwnProperty('price')) {
+  if(isNaN(Number(req.body.price)) || isNaN(Number(req.body.inventory))) {
     res.redirect('/products/new');
-  } else if(isNaN(Number(req.body.price))) {
-    res.redirect('/products/new');
-  } else if(!req.body.hasOwnProperty('inventory')){
-    res.redirect('/products/new');
-  } else if(isNaN(Number(req.body.inventory))) {
-    res.redirect('/products/new');
-  } else {
-    next()
   }
+  next()
 }
 
 router.route('/')
