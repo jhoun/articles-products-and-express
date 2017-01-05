@@ -1,18 +1,13 @@
 const request = require('supertest');
 const chai = require('chai');
 const app = require('../server');
+const Product = require('../db/product');
 const expect = chai.expect;
 const should = chai.should;
 
 
 
 describe('/products', function() {
-  // it('should be a /products route', function(done) {
-  //   request(app)
-  //     .post('/products')
-  //     // .expect('Content-Type', /json/)
-  //     .expect(200, done);
-  // });
   it('respond with redirecting to /products', function(done) {
     request(app)
       .post('/products')
@@ -27,6 +22,7 @@ describe('/products', function() {
           throw new Error(err);
         }
         expect(res.header.location).to.equal('/products')
+        Product.reset();
         done()
       });
   })
@@ -62,4 +58,7 @@ describe('/products', function() {
         done()
     });
   })
+
+
+
 });

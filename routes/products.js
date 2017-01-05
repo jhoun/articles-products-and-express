@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Products = require('../db/product');
 
 
 const isObjEmpty = (req, res, next) => {
@@ -13,21 +14,16 @@ const isObjEmpty = (req, res, next) => {
 const isInputValid = (req, res, next) => {
   if(isNaN(Number(req.body.price)) || isNaN(Number(req.body.inventory))) {
     res.redirect('/products/new');
-  }
+  } else {
   next()
+  }
 }
 
 router.route('/')
-  // .get((req, res) => {
-  //   res.send('to do');
-  // })
   .post(isObjEmpty, isInputValid, (req,res) => {
-      res.redirect('/products');
+    Products.add(req.body);
+    res.redirect('/products');
   })
-
-
-
-
 
 
 
