@@ -27,6 +27,15 @@ const idCheck = (req, res, next) => {
   }
 }
 
+const idCheckForDelete = (req, res, next) => {
+  if (Products.isIdFound(req.params.id) === false) {
+    res.redirect(`/products/${req.params.id}`);
+  } else {
+    console.log('hit');
+    next()
+  }
+}
+
 router.route('/')
   .post(isObjEmpty, isInputValid, (req,res) => {
     Products.add(req.body);
@@ -43,7 +52,7 @@ router.route('/:id')
     Products.editById(req.params.id, req.body.name);
     res.redirect(`/products/${req.params.id}`);
   })
-  .delete((req,res) => {
+  .delete(idCheckForDelete, (req,res) => {
     Products.delete(req.params.id);
     res.redirect('/products');
   })

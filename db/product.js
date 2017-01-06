@@ -37,7 +37,6 @@ module.exports = (function(){
     }
   }
 
-
   var _reset = function(){
     products = [];
     i = 0;

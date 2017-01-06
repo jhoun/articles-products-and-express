@@ -108,7 +108,7 @@ describe('/products/:id', function() {
       });
   })
 
-  it('if id not found, redirects to products/:id/edit', function(done) {
+  it('redirect to /products if deleted', function(done) {
     request(app)
       .post('/products')
       .type('form')
@@ -130,6 +130,34 @@ describe('/products/:id', function() {
           }
           console.log(res.header);
           expect(res.header.location).to.equal('/products')
+          Product.reset();
+          done()
+        });
+      });
+  })
+
+  it('redirect to /products/:id if not deleted', function(done) {
+    request(app)
+      .post('/products')
+      .type('form')
+      .send({
+        name:'Red Bag',
+        price: '34',
+        inventory: '100'
+      })
+      .end(function (err, res) {
+        if (err) {
+          throw new Error(err);
+        }
+        request(app)
+        .delete('/products/2')
+        .type('form')
+        .end(function (err, res) {
+          if (err) {
+            throw new Error(err);
+          }
+          console.log(res.header);
+          expect(res.header.location).to.equal('/products/2')
           Product.reset();
           done()
         });
