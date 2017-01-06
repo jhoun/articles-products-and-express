@@ -5,7 +5,6 @@ const Products = require('../db/product');
 
 const isObjEmpty = (req, res, next) => {
   if(Object.keys(req.body).length === 0) {
-  console.log('req.body: ', req.body);
     res.redirect('/products/new');
   } else {
     next()
@@ -54,7 +53,8 @@ router.route('/new')
 
 router.route('/:id')
   .get((req, res) => {
-    res.render(`/products/${req.params.id}`);
+    var updatedProduct = Products.isIdFound(Number(req.params.id));
+    res.render('products', {product: updatedProduct });
   })
   .put(idCheck, (req,res) => {
     Products.editById(req.params.id, req.body.name, req.body.price, req.body.inventory);
@@ -67,7 +67,7 @@ router.route('/:id')
 
 router.route('/:id/edit')
   .get((req,res) => {
-    res.render('edit');
+    res.render('edit', {productId: req.params.id});
   })
 
 module.exports = router;

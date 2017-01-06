@@ -1,6 +1,11 @@
-<form form="form" action="/products" method="put" enctype="x-www-form-urlencoded">
-  <input type="text">name</br>
-  <input type="text">price</br>
-  <input type="text">inventory</br>
-  <input type="submit" value="submit">
+<form form="form" action="/products/{{productId}}" method="POST" enctype="x-www-form-urlencoded">
+  <input type="hidden" name="_method" value="PUT">
+  <h1>Edit Page</h1>
+  <h3>name</h3>
+  <input type="text" name="name" value="cheeseburger"></br>
+  <h3>price</h3>
+  <input type="text" name="price" value="11"></br>
+  <h3>inventory</h3>
+  <input type="text" name="inventory" value="19"></br>
+  <input type="submit" value="Submit">
 </form>
