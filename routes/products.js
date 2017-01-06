@@ -5,6 +5,7 @@ const Products = require('../db/product');
 
 const isObjEmpty = (req, res, next) => {
   if(Object.keys(req.body).length === 0) {
+  console.log('req.body: ', req.body);
     res.redirect('/products/new');
   } else {
     next()
@@ -41,17 +42,20 @@ router.route('/')
     res.render('index', {all: all});
   })
   .post(isObjEmpty, isInputValid, (req,res) => {
+
     Products.add(req.body);
     res.redirect('/products');
   })
 
 router.route('/new')
   .get((req,res) => {
-
     res.render('new');
   })
 
 router.route('/:id')
+  .get((req, res) => {
+    res.render(`/products/${req.params.id}`);
+  })
   .put(idCheck, (req,res) => {
     Products.editById(req.params.id, req.body.name, req.body.price, req.body.inventory);
     res.redirect(`/products/${req.params.id}`);
