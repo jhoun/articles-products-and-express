@@ -9,17 +9,24 @@ module.exports = (function(){
     data.price = Number(data.price);
     data.inventory = Number(data.inventory);
     products.push(data)
+    console.log('newpost: ', products);
     return products;
   }
 
   var _editById = function(routeId, newName){
-      console.log(routeId);
     for (var i = 0; i < products.length; i++){
       if (Number(routeId) === products[i].id) {
         products[i].name = newName;
       }
-      console.log('new products: ', products);
       return products;
+    }
+  }
+
+  var _isIdFound = function(routeId){
+    for (var i = 0; i < products.length; i++){
+      if (Number(routeId) !== products[i].id){
+        return false;
+      }
     }
   }
 
@@ -31,7 +38,8 @@ module.exports = (function(){
   return {
     add: _add,
     reset: _reset,
-    editById: _editById
+    editById: _editById,
+    isIdFound: _isIdFound
   }
 
 })();

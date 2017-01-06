@@ -19,6 +19,14 @@ const isInputValid = (req, res, next) => {
   }
 }
 
+const idCheck = (req, res, next) => {
+  if (Products.isIdFound(req.params.id) === false) {
+    res.redirect(`/products/${req.params.id}/edit`);
+  } else {
+    next()
+  }
+}
+
 router.route('/')
   .post(isObjEmpty, isInputValid, (req,res) => {
     Products.add(req.body);
@@ -31,9 +39,14 @@ router.route('/new')
   })
 
 router.route('/:id')
-  .put((req,res) => {
+  .put(idCheck, (req,res) => {
     Products.editById(req.params.id, req.body.name);
     res.redirect(`/products/${req.params.id}`);
+  })
+
+router.route('/:id/edit')
+  .get((req,res) => {
+    res.render('edit');
   })
 
 //do put, then check get to make sure that name property changes
