@@ -1,1 +1,9 @@
-<h1>Hello</h1>
+<ul>
+{{#each all}}
+  <li>Name: {{this.name}}</li>
+  <li>Price: {{this.price}}</li>
+  <li>Inventory: {{this.inventory}}</li>
+  <br>
+  <br>
+{{/each}}
+</ul>

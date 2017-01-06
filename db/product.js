@@ -37,6 +37,11 @@ module.exports = (function(){
     }
   }
 
+  var _all = function(){
+    console.log(products);
+    return products;
+  }
+
   var _reset = function(){
     products = [];
     i = 0;
@@ -47,7 +52,8 @@ module.exports = (function(){
     reset: _reset,
     editById: _editById,
     isIdFound: _isIdFound,
-    delete: _delete
+    delete: _delete,
+    all: _all
   }
 
 })();

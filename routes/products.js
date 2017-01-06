@@ -31,12 +31,15 @@ const idCheckForDelete = (req, res, next) => {
   if (Products.isIdFound(req.params.id) === false) {
     res.redirect(`/products/${req.params.id}`);
   } else {
-    console.log('hit');
     next()
   }
 }
 
 router.route('/')
+  .get((req, res) => {
+    var all = Products.all();
+    res.render('index', {all: all});
+  })
   .post(isObjEmpty, isInputValid, (req,res) => {
     Products.add(req.body);
     res.redirect('/products');
@@ -44,7 +47,7 @@ router.route('/')
 
 router.route('/new')
   .get((req,res) => {
-    res.render('index');
+    res.render('new');
   })
 
 router.route('/:id')
