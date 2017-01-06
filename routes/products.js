@@ -43,13 +43,14 @@ router.route('/:id')
     Products.editById(req.params.id, req.body.name);
     res.redirect(`/products/${req.params.id}`);
   })
+  .delete((req,res) => {
+    Products.delete(req.params.id);
+    res.redirect('/products');
+  })
 
 router.route('/:id/edit')
   .get((req,res) => {
     res.render('edit');
   })
-
-//do put, then check get to make sure that name property changes
-
 
 module.exports = router;

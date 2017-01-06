@@ -9,7 +9,6 @@ module.exports = (function(){
     data.price = Number(data.price);
     data.inventory = Number(data.inventory);
     products.push(data)
-    console.log('newpost: ', products);
     return products;
   }
 
@@ -30,6 +29,15 @@ module.exports = (function(){
     }
   }
 
+  var _delete = function(routeId){
+    for (var i = 0; i < products.length; i ++){
+      if (Number(routeId) === products[i].id){
+        products.splice(i, 1);
+      }
+    }
+  }
+
+
   var _reset = function(){
     products = [];
     i = 0;
@@ -39,7 +47,8 @@ module.exports = (function(){
     add: _add,
     reset: _reset,
     editById: _editById,
-    isIdFound: _isIdFound
+    isIdFound: _isIdFound,
+    delete: _delete
   }
 
 })();
