@@ -47,12 +47,13 @@ router.route('/')
 
 router.route('/new')
   .get((req,res) => {
+
     res.render('new');
   })
 
 router.route('/:id')
   .put(idCheck, (req,res) => {
-    Products.editById(req.params.id, req.body.name);
+    Products.editById(req.params.id, req.body.name, req.body.price, req.body.inventory);
     res.redirect(`/products/${req.params.id}`);
   })
   .delete(idCheckForDelete, (req,res) => {

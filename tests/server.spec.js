@@ -13,7 +13,7 @@ describe('POST /products', function() {
       .post('/products')
       .type('form')
       .send({
-        name:'Red Bag',
+        name:'Red',
         price: '34',
         inventory: '100'
       })
@@ -67,6 +67,8 @@ describe('/products/:id', function() {
     .type('form')
     .send({
       name:'Rainbow Bag',
+      price: '1000',
+      invenotry: '5'
     })
     .end(function (err, res) {
       if (err) {

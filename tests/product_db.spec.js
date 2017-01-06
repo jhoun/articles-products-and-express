@@ -21,9 +21,9 @@ describe('product db', function() {
 
     let addResult = Product.add(postData);
 
-    let editByIdResult = Product.editById(1, 'rainbow bag');
+    let editByIdResult = Product.editById(1, 'rainbow bag', '1000', '5');
 
-    expect(editByIdResult).to.deep.equal([{id: 1, name:'rainbow bag', price: 23, inventory: 100}]);
+    expect(editByIdResult).to.deep.equal([{id: 1, name:'rainbow bag', price: 1000, inventory: 5}]);
     Product.reset();
     done();
   });
