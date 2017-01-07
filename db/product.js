@@ -27,12 +27,11 @@ module.exports = (function(){
   var _isIdFound = function(routeId){
     for (var i = 0; i < products.length; i++){
       if (Number(routeId) === products[i].id){
-        console.log('products[i]: ', products[i]);
         return products[i];
       }
     }
-      return false;
-    }
+    return false;
+  }
 
   var _delete = function(routeId){
     for (var i = 0; i < products.length; i ++){

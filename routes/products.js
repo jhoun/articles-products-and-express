@@ -41,7 +41,6 @@ router.route('/')
     res.render('index', {all: all});
   })
   .post(isObjEmpty, isInputValid, (req,res) => {
-
     Products.add(req.body);
     res.redirect('/products');
   })

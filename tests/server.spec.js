@@ -61,24 +61,40 @@ describe('POST /products', function() {
 });
 
 describe('/products/:id', function() {
-  it('responds by redirecting to products/id if id match found', function(done) {
+
+   it('respond with redirecting to /products', function(done) {
     request(app)
-    .put('/products/1')
-    .type('form')
-    .send({
-      name:'Rainbow Bag',
-      price: '1000',
-      invenotry: '5'
-    })
-    .end(function (err, res) {
-      if (err) {
-        throw new Error(err);
-      }
-      expect(res.header.location).to.equal('/products/1')
-      Product.reset();
-      done()
-    });
+      .post('/products')
+      .type('form')
+      .send({
+        name:'Red',
+        price: '34',
+        inventory: '100'
+      })
+      .end(function (err, res) {
+        if (err) {
+          throw new Error(err);
+        }
+        request(app)
+        .put('/products/1')
+        .type('form')
+        .send({
+          name:'Rainbow Bag',
+          price: '1000',
+          invenotry: '5'
+        })
+        .end(function (err, res) {
+          if (err) {
+            throw new Error(err);
+          }
+          expect(res.header.location).to.equal('/products/1')
+          Product.reset();
+          done()
+        });
+      });
   })
+
+
 
   it('if id not found, redirects to products/:id/edit', function(done) {
     request(app)
