@@ -3,6 +3,8 @@ const router = express.Router();
 const Products = require('../db/product');
 
 
+
+
 const isObjEmpty = (req, res, next) => {
   if(Object.keys(req.body).length === 0) {
     res.redirect('/products/new');
@@ -37,12 +39,25 @@ const idCheckForDelete = (req, res, next) => {
 
 router.route('/')
   .get((req, res) => {
-    var all = Products.all();
-    res.render('index', {all: all});
+    Products.all()
+    .then((products) => {
+      res.render('index', {products});
+    })
+    .catch((e) =>{
+      console.error(e);
+      res.json(e);
+    })
   })
   .post(isObjEmpty, isInputValid, (req,res) => {
-    Products.add(req.body);
-    res.redirect('/products');
+    Products.add(req.body)
+      .then((products)=>{
+        console.log('products: ', products);
+        res.redirect('/products');
+      })
+      .catch((e) =>{
+        console.error(e);
+        res.json(e);
+      })
   })
 
 router.route('/new')

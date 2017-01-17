@@ -1,16 +1,36 @@
+const promise = require('bluebird');
+
+var options = {
+    promiseLib: promise
+};
+var pgp = require('pg-promise')(options);
+
+var cn = {
+    host: 'localhost',
+    port: 5432,
+    database: 'articles_products',
+    user: 'jay',
+    password: null
+};
+
+var db = pgp(cn);
+
 module.exports = (function(){
   var products =[];
   var i = 0;
 
   var _add = function(data){
-    ++i;
-    var id = i;
-    data.id = Number(id);
-    data.price = Number(data.price);
-    data.inventory = Number(data.inventory);
-    products.push(data)
-    console.log('products after add: ',products);
-    return products;
+
+    return db.query('INSERT INTO products(id, name, price, inventory) VALUES($1, $2, $3, $4)', [data.id, data.name, data.price, data.inventory]);
+
+    // ++i;
+    // var id = i;
+    // data.id = Number(id);
+    // data.price = Number(data.price);
+    // data.inventory = Number(data.inventory);
+    // products.push(data)
+    // console.log('products after add: ',products);
+    // return products;
   }
 
   var _editById = function(routeId, newName, newPrice, newInventory){
@@ -42,7 +62,7 @@ module.exports = (function(){
   }
 
   var _all = function(){
-    return products;
+    return db.query('SELECT * FROM products')
   }
 
   var _reset = function(){
