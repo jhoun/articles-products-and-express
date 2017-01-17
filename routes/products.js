@@ -78,7 +78,7 @@ router.route('/:id')
         res.json(e);
       })
   })
-  .put(/*idCheck,*/ (req,res) => {
+  .put(idCheck, (req,res) => {
     Products.editById(req.params.id, req.body.name, req.body.price, req.body.inventory)
       .then((products) => {
         res.redirect(`/products/${req.params.id}`);
