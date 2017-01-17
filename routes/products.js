@@ -37,6 +37,28 @@ const idCheckForDelete = (req, res, next) => {
   }
 }
 
+router.route('/:id')
+  .get((req, res) => {
+
+    var updatedProduct = Products.isIdFound(Number(req.params.id));
+    res.render('products', {product: updatedProduct });
+  })
+  .put(/*idCheck,*/ (req,res) => {
+    Products.editById(req.params.id, req.body.name, req.body.price, req.body.inventory);
+    res.redirect(`/products/${req.params.id}`);
+  })
+  .delete(/*idCheckForDelete,*/ (req,res) => {
+    console.log('req.params.id: ', req.params.id);
+    Products.delete(req.params.id)
+      .then((products) => {
+        res.redirect('/products');
+      })
+      .catch((e)=> {
+        console.log(e);
+        res.json(e);
+      })
+  })
+
 router.route('/')
   .get((req, res) => {
     Products.all()
@@ -48,6 +70,7 @@ router.route('/')
       res.json(e);
     })
   })
+
   .post(isObjEmpty, isInputValid, (req,res) => {
     Products.add(req.body)
       .then((products)=>{
@@ -65,19 +88,6 @@ router.route('/new')
     res.render('new');
   })
 
-router.route('/:id')
-  .get((req, res) => {
-    var updatedProduct = Products.isIdFound(Number(req.params.id));
-    res.render('products', {product: updatedProduct });
-  })
-  .put(idCheck, (req,res) => {
-    Products.editById(req.params.id, req.body.name, req.body.price, req.body.inventory);
-    res.redirect(`/products/${req.params.id}`);
-  })
-  .delete(idCheckForDelete, (req,res) => {
-    Products.delete(req.params.id);
-    res.redirect('/products');
-  })
 
 router.route('/:id/edit')
   .get((req,res) => {

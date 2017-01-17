@@ -54,11 +54,14 @@ module.exports = (function(){
   }
 
   var _delete = function(routeId){
-    for (var i = 0; i < products.length; i ++){
-      if (Number(routeId) === products[i].id){
-        products.splice(i, 1);
-      }
-    }
+    console.log('routeId: ', routeId);
+    return db.query('DELETE FROM products WHERE id = $1', [routeId]);
+
+    // for (var i = 0; i < products.length; i ++){
+    //   if (Number(routeId) === products[i].id){
+    //     products.splice(i, 1);
+    //   }
+    // }
   }
 
   var _all = function(){

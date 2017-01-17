@@ -29,6 +29,10 @@ app.use(methodOverride(function (req, res) {
   }
 }));
 
+app.use((req, res, next) => {
+  console.log(req.url, req.method)
+  next('route');
+})
 app.use('/products', products);
 
 app.use('/articles', articles);
