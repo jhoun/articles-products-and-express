@@ -3,8 +3,6 @@ const router = express.Router();
 const Products = require('../db/product');
 
 
-
-
 const isObjEmpty = (req, res, next) => {
   if(Object.keys(req.body).length === 0) {
     res.redirect('/products/new');
@@ -37,32 +35,13 @@ const idCheckForDelete = (req, res, next) => {
   }
 }
 
-router.route('/:id')
-  .get((req, res) => {
-
-    var updatedProduct = Products.isIdFound(Number(req.params.id));
-    res.render('products', {product: updatedProduct });
-  })
-  .put(/*idCheck,*/ (req,res) => {
-    Products.editById(req.params.id, req.body.name, req.body.price, req.body.inventory);
-    res.redirect(`/products/${req.params.id}`);
-  })
-  .delete(/*idCheckForDelete,*/ (req,res) => {
-    console.log('req.params.id: ', req.params.id);
-    Products.delete(req.params.id)
-      .then((products) => {
-        res.redirect('/products');
-      })
-      .catch((e)=> {
-        console.log(e);
-        res.json(e);
-      })
-  })
 
 router.route('/')
   .get((req, res) => {
+    console.log('from route');
     Products.all()
     .then((products) => {
+      console.log('/{products}: ', {products});
       res.render('index', {products});
     })
     .catch((e) =>{
@@ -70,7 +49,6 @@ router.route('/')
       res.json(e);
     })
   })
-
   .post(isObjEmpty, isInputValid, (req,res) => {
     Products.add(req.body)
       .then((products)=>{
@@ -87,6 +65,41 @@ router.route('/new')
   .get((req,res) => {
     res.render('new');
   })
+
+router.route('/:id')
+  .get((req, res) => {
+    Products.isIdFound(Number(req.params.id))
+      .then((products) => {
+        console.log('products: ', {products});
+        res.render('products', {products});
+      })
+      .catch((e) =>{
+        console.error(e);
+        res.json(e);
+      })
+  })
+  .put(/*idCheck,*/ (req,res) => {
+    Products.editById(req.params.id, req.body.name, req.body.price, req.body.inventory)
+      .then((products) => {
+        res.redirect(`/products/${req.params.id}`);
+      })
+      .catch((e)=> {
+        console.log(e);
+        res.json(e);
+      })
+  })
+  .delete(/*idCheckForDelete,*/ (req,res) => {
+    console.log('req.params.id: ', req.params.id);
+    Products.delete(req.params.id)
+      .then((products) => {
+        res.redirect('/products');
+      })
+      .catch((e)=> {
+        console.log(e);
+        res.json(e);
+      })
+  })
+
 
 
 router.route('/:id/edit')

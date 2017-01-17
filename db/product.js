@@ -21,7 +21,7 @@ module.exports = (function(){
 
   var _add = function(data){
 
-    return db.query('INSERT INTO products(id, name, price, inventory) VALUES($1, $2, $3, $4)', [data.id, data.name, data.price, data.inventory]);
+    return db.query('INSERT INTO products(name, price, inventory) VALUES($1, $2, $3)', [data.name, data.price, data.inventory]);
 
     // ++i;
     // var id = i;
@@ -34,23 +34,29 @@ module.exports = (function(){
   }
 
   var _editById = function(routeId, newName, newPrice, newInventory){
-    for (var i = 0; i < products.length; i++){
-      if (products[i].id === Number(routeId)) {
-        products[i].name = newName;
-        products[i].price = Number(newPrice);
-        products[i].inventory = Number(newInventory);
-      }
-    }
-      return products;
+
+    return db.query('UPDATE products SET name=$1, price=$2, inventory=$3 WHERE id=$4' ,[newName, newPrice, newInventory, routeId]);
+
+    // for (var i = 0; i < products.length; i++){
+    //   if (products[i].id === Number(routeId)) {
+    //     products[i].name = newName;
+    //     products[i].price = Number(newPrice);
+    //     products[i].inventory = Number(newInventory);
+    //   }
+    // }
+    //   return products;
   }
 
   var _isIdFound = function(routeId){
-    for (var i = 0; i < products.length; i++){
-      if (Number(routeId) === products[i].id){
-        return products[i];
-      }
-    }
-    return false;
+    console.log('from db');
+    return db.query('SELECT * FROM products WHERE id = $1', [routeId]);
+
+    // for (var i = 0; i < products.length; i++){
+    //   if (Number(routeId) === products[i].id){
+    //     return products[i];
+    //   }
+    // }
+    // return false;
   }
 
   var _delete = function(routeId){
@@ -65,6 +71,7 @@ module.exports = (function(){
   }
 
   var _all = function(){
+    console.log('hello');
     return db.query('SELECT * FROM products')
   }
 
